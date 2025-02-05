@@ -1,0 +1,23 @@
+﻿namespace mxdat
+{
+    internal class XORCryptor
+    {
+        private readonly uint ENCRYPTION_KEY = 2948064217;
+        //byte[] key = [0xD9];
+
+        public bool Encrypt(byte[] data, int offset, int length)
+        {
+            for (int i = offset; i < offset + length; i++)
+            {
+                data[i] ^= (byte)ENCRYPTION_KEY;
+                //data[i] ^= key[i % key.Length];
+            }
+            return true;
+        }
+
+        public XORCryptor()
+        {
+
+        }
+    }
+}
