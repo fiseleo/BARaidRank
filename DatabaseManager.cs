@@ -1,9 +1,6 @@
-// DatabaseManager.cs
+﻿// DatabaseManager.cs
 using Microsoft.Data.Sqlite;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+
 
 namespace BARaidRank
 {

@@ -37,12 +37,6 @@ namespace BARaidRank
                     Thread.Sleep(DelayToPause);
                 }
 
-                Console.WriteLine("Restarting the raid rank process at 3 AM Taipei time...");
-                Thread.Sleep(TimeSpan.FromMinutes(15)); // Wait for 15 minutes before restarting
-
-                Console.WriteLine("Restarting the raid rank process...");
-                Stop3AMCheckTimerInternal();
-                BARaidRankMain.Main();
 
 
             }
@@ -82,10 +76,10 @@ namespace BARaidRank
             }
             _isRestartingAt3AM = false;
 
-            string firstBossGroup = currentSeason.OpenRaidBossGroup.FirstOrDefault() ?? 
-                                    currentSeason.OpenRaidBossGroup01 ?? 
+            string firstBossGroup = currentSeason.OpenRaidBossGroup.FirstOrDefault() ??
+                                    currentSeason.OpenRaidBossGroup01 ??
                                     "UnknownBossGroup";
-            
+
             string baseBossName = firstBossGroup.Split('_').FirstOrDefault() ?? "UnknownBoss";
 
             string tableName = $"S{currentSeason.SeasonDisplay}_{baseBossName}";
@@ -94,7 +88,7 @@ namespace BARaidRank
             List<string> bossArmorTypes = new List<string>(); //
             if (currentSeason.OpenRaidBossGroup != null && currentSeason.OpenRaidBossGroup.Any()) //
             {
-                foreach(var bg in currentSeason.OpenRaidBossGroup) //
+                foreach (var bg in currentSeason.OpenRaidBossGroup) //
                 {
                     bossArmorTypes.Add(DatabaseManager.ExtractArmorType(bg)); //
                 }
@@ -110,7 +104,7 @@ namespace BARaidRank
             DatabaseManager.EnsureEliminateTableExists(tableName, bossArmorTypes); //
 
             string rootPath = AppDomain.CurrentDomain.BaseDirectory;
-            string mxFilePath = Path.Combine(rootPath,"mx" ,"mx.json");
+            string mxFilePath = Path.Combine(rootPath, "mx", "mx.json");
             PacketCryptManager instance = PacketCryptManager.Instance;
 
 
@@ -167,7 +161,13 @@ namespace BARaidRank
                 if (_isRestartingAt3AM)
                 {
                     Console.WriteLine("Detected a restart at 3 AM, exiting the loop to allow the program to restart.");
-                    break;
+
+                    Console.WriteLine("Restarting the raid rank process at 3 AM Taipei time...");
+                    Thread.Sleep(TimeSpan.FromMinutes(15)); // Wait for 15 minutes before restarting
+                    Console.WriteLine("Restarting the raid rank process...");
+                    Stop3AMCheckTimerInternal();
+                    BARaidRankMain.Main();
+                    return; // Exit the loop to allow the program to restart
                 }
 
                 string json = string.Format(baseJson, RankValue, hash, mxToken, AccountServerId, AccountId);
@@ -253,7 +253,7 @@ namespace BARaidRank
                 RankValue = RankValue + 30;
                 hash++;
                 Thread.Sleep(900);
-            }                  
+            }
 
 
 

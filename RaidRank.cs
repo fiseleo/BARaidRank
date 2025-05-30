@@ -1,4 +1,4 @@
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using NetworkProtocol;
 using RestSharp;
 
@@ -35,12 +35,7 @@ namespace BARaidRank
                     Thread.Sleep(DelayToPause);
                 }
 
-                Console.WriteLine("Restarting the raid rank process at 3 AM Taipei time...");
-                Thread.Sleep(TimeSpan.FromMinutes(15)); // Wait for 15 minutes before restarting
 
-                Console.WriteLine("Restarting the raid rank process...");
-                Stop3AMCheckTimerInternal();
-                BARaidRankMain.Main();
 
 
             }
@@ -145,8 +140,6 @@ namespace BARaidRank
             {
 
                 // If BARaidRankMain.Main() is called due to a restart at 3 o'clock,
-                // BARaidRankMain.Main() will call GetRaidList.GetRaidListMain() again,
-                // GetRaidList.GetRaidListMain() may then call RaidRank.RaidRankMain() again.
                 // At this point _isRestartingAt3AM should have been reset to false. 
                 // However, if this while loop lasts for a long time for some reason, and goes beyond the next 2:55,
                 // And CheckAndPauseAt3AMCallback is triggered again and sets _isRestartingAt3AM = true,
@@ -155,7 +148,13 @@ namespace BARaidRank
                 if (_isRestartingAt3AM)
                 {
                     Console.WriteLine("Detected a restart at 3 AM, exiting the loop to allow the program to restart.");
-                    break;
+                    Console.WriteLine("Restarting the raid rank process at 3 AM Taipei time...");
+                    Thread.Sleep(TimeSpan.FromMinutes(15)); // Wait for 15 minutes before restarting
+
+                    Console.WriteLine("Restarting the raid rank process...");
+                    Stop3AMCheckTimerInternal();
+                    BARaidRankMain.Main();
+                    return; // Exit the loop to allow the program to restart
                 }
 
                 string json = string.Format(baseJson, RankValue, hash, mxToken, AccountServerId, AccountId);
@@ -238,7 +237,7 @@ namespace BARaidRank
                 RankValue = RankValue + 30;
                 hash++;
                 Thread.Sleep(900);
-                
+
             }
         }
     }
