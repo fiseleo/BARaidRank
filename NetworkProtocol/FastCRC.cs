@@ -1,5 +1,5 @@
-﻿using System;
-namespace mxdat
+﻿
+namespace BARaidRank
 {
     public class FastCRC
     {

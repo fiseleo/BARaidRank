@@ -1,9 +1,9 @@
 ﻿using System.IO.Compression;
 using System.Text;
-using mxdat.NetworkProtocol;
+using NetworkProtocol;
 
 
-namespace mxdat
+namespace BARaidRank
 {
     public class PacketCryptManager
     {

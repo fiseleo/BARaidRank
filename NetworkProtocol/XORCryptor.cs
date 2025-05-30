@@ -1,4 +1,4 @@
-﻿namespace mxdat
+﻿namespace BARaidRank
 {
     internal class XORCryptor
     {

@@ -2,7 +2,7 @@
 
 
 
-namespace mxdat.NetworkProtocol
+namespace NetworkProtocol
 {
 
     internal class ProtocolConverter

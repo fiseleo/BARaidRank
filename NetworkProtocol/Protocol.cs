@@ -1,4 +1,4 @@
-﻿namespace mxdat.NetworkProtocol
+﻿namespace NetworkProtocol
 {
     public enum Protocol // TypeDefIndex: 8692
     {
