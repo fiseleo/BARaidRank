@@ -147,12 +147,14 @@ namespace BARaidRank
                         {
                             Console.WriteLine(bossGroup);
                         }
-                        if (closestSeason.SourceFile == "EliminateRaidSeasonManageExcelTable.json")
+                        if (Path.GetFileName(closestSeason.SourceFile) == "EliminateRaidSeasonManageExcelTable.json")
                         {
                             Console.WriteLine("Executing EliminateRaidOpponentList...");
-                            //TODO: Implement EliminateRaidOpponentList logic here
+                            Console.WriteLine("Current Eliminate Raid Season detected:");
+                            EliminateRaidRank.EliminateRaidRankMain(closestSeason);
+
                         }
-                        else if (closestSeason.SourceFile == "RaidSeasonManageExcelTable.json")
+                        else if (Path.GetFileName(closestSeason.SourceFile) == "EliminateRaidSeasonManageExcelTable.json")
                         {
                             Console.WriteLine("Current Raid Season detected:");
                             string bossName = closestSeason.OpenRaidBossGroup.FirstOrDefault() ?? "N/A";
