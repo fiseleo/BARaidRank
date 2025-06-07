@@ -234,6 +234,7 @@ namespace BARaidRank
                         rankingsToSave.Add(new EliminateOpponentInfo
                         {
                             Rank = opponent.Value<int>("Rank"),
+                            BestRankingPoint = opponent.Value<long>("BestRankingPoint"),
                             Nickname = opponent.Value<string>("Nickname"),
                             Tier = opponent.Value<int>("Tier"),
                             RepresentCharacterUniqueId = opponent.Value<int>("RepresentCharacterUniqueId"),

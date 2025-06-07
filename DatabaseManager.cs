@@ -22,6 +22,7 @@ namespace BARaidRank
         public int RepresentCharacterUniqueId { get; set; }
         public long AccountId { get; set; }
         public int Rank { get; set; }
+        public long BestRankingPoint { get; set; }
         public Dictionary<string, long> BossGroupToRankingPoint { get; set; }
     }
 
@@ -109,6 +110,7 @@ namespace BARaidRank
                 
                 string columns = @"
                     Rank INTEGER PRIMARY KEY,
+                    BestRankingPoint BIGINT,
                     Nickname TEXT,
                     Tier INTEGER,
                     RepresentCharacterUniqueId INTEGER,
@@ -136,24 +138,26 @@ namespace BARaidRank
                     {
                         var command = connection.CreateCommand();
                         
-                        string columnNames = "Rank, Nickname, Tier, RepresentCharacterUniqueId, AccountId";
-                        string valuePlaceholders = "$rank, $nickname, $tier, $charId, $accountId";
+                        string columnNames = "Rank, BestRankingPoint ,Nickname, Tier, RepresentCharacterUniqueId, AccountId";
+                        string valuePlaceholders = "$rank, $point, $nickname, $tier, $charId, $accountId";
 
                         command.Parameters.AddWithValue("$rank", rankInfo.Rank);
+                        command.Parameters.AddWithValue("$point", rankInfo.BestRankingPoint);
                         command.Parameters.AddWithValue("$nickname", rankInfo.Nickname);
                         command.Parameters.AddWithValue("$tier", rankInfo.Tier);
                         command.Parameters.AddWithValue("$charId", rankInfo.RepresentCharacterUniqueId);
                         command.Parameters.AddWithValue("$accountId", rankInfo.AccountId);
 
+
                         foreach (var armorType in bossArmorTypes.Distinct())
                         {
                             string sanitizedArmorTypeColumn = armorType.Replace(" ", "_").Replace("-", "_");
-                            
 
-                            columnNames += $", \"{sanitizedArmorTypeColumn}\""; 
-                            
 
-                            string paramName = $"${sanitizedArmorTypeColumn.ToLower()}"; 
+                            columnNames += $", \"{sanitizedArmorTypeColumn}\"";
+
+
+                            string paramName = $"${sanitizedArmorTypeColumn.ToLower()}";
                             valuePlaceholders += $", {paramName}";
 
                             long score = 0;
