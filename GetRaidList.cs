@@ -154,7 +154,7 @@ namespace BARaidRank
                             EliminateRaidRank.EliminateRaidRankMain(closestSeason);
 
                         }
-                        else if (Path.GetFileName(closestSeason.SourceFile) == "EliminateRaidSeasonManageExcelTable.json")
+                        else if (Path.GetFileName(closestSeason.SourceFile) == "RaidSeasonManageExcelTable.json")
                         {
                             Console.WriteLine("Current Raid Season detected:");
                             string bossName = closestSeason.OpenRaidBossGroup.FirstOrDefault() ?? "N/A";
